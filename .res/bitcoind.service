@@ -1,0 +1,39 @@
+# assuming bitcoind binary is /bitcoin/daemon/bitcoind
+# assuming chmod+x /bitcoin/daemon/bitcoind
+# assuming bitcoin-cli binary is /bitcoin/daemon/bitcoin-cli
+# assuming chmod+x /bitcoin/daemon/bitcoin-cli
+#
+# Copy the service file:
+# cp ./bitcoind.service /lib/systemd/system/bitcoind.service
+# chmod 644 /lib/systemd/system/bitcoind.service
+#
+# Install service file:
+# systemctl daemon-reload
+# systemctl enable bitcoind.service
+# Run service:
+# systemctl start bitcoind.service
+# Check status:
+# systemctl status bitcoind.service
+# Stop service:
+# systemctl stop bitcoind.service
+#
+# Remove service:
+# systemctl disable bitcoind.service
+
+[Unit]
+Description=Bitcoin Deamon
+After=syslog.target
+After=network.target
+
+[Service]
+Type=forking
+PIDFile=/bitcoin/data/bitcoind.pid
+ExecStart=/bitcoin/daemon/bitcoind -daemon -datadir=/bitcoin/data/ -pid=bitcoind.pid -conf=bitcoin.conf
+ExecStop=/bitcoin/daemon/bitcoin-cli -datadir=/bitcoin/data/ stop
+ExecReload=/bitcoin/daemon/bitcoin-cli -datadir=/bitcoin/data/ stop ; /bin/sleep 60 ; /bitcoin/daemon/bitcoind -daemon -datadir=/bitcoin/data/ -pid=bitcoind.pid -conf=bitcoin.conf
+RestartSec=300
+WorkingDirectory=/bitcoin/data/
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

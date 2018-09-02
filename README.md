@@ -48,7 +48,6 @@ A `bitcoin.conf` file is needed in data directory.
 
     server=1
     daemon=1
-    staking=0
     rpcuser=muchuser
     rpcpassword=suchsicret
     pid=bitcoind.pid
