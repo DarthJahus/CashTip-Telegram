@@ -1,0 +1,29 @@
+# cp ./cashtip.service /lib/systemd/system/cashtip.service
+# chmod 644 /lib/systemd/system/cashtip.service
+# Don't forget #!/usr/bin/python
+# chmod +x ./cashtip.py
+# systemctl daemon-reload
+# systemctl enable cashtip.service
+# systemctl start cashtip.service
+# Status:
+# systemctl status cashtip.service
+# To stop:
+# systemctl stop cashtip.service
+# To remove
+# systemctl disable cashtip.service
+
+[Unit]
+Description=CashTipBot
+After=syslog.target
+After=network.target
+After=bitcoind.service
+
+[Service]
+Type=simple
+ExecStart=/bitcoin/cashtip-telegram/cashtip.py
+WorkingDirectory=/bitcoin/cashtip-telegram/
+Restart=always
+RestartSec=600
+
+[Install]
+WantedBy=multi-user.target
