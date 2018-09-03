@@ -1,26 +1,29 @@
 {
 	"welcome": {
 		"en": [
-			":panda_face: Hi! This is a tipbot for Pandacoin.",
-			"You can use it to share pandas with your friends."
+			":sparkle: Hi! This is a tipbot for Bitcoin Cash.",
+			"You can use it to share bits with your friends."
 		]
 	},
 	"help": {
 		"en": [
-			"This bot allows you to receive, store and send pandacoins on Telegram.",
+			"This bot allows you to receive, store and send bits on Telegram.",
 			"",
-			":moneybag: To get started, create a deposit address or ask a friend to send you some pandas.",
+			":moneybag: To get started, create a deposit address or ask a friend to send you some bits.",
 			"Use /deposit or /address _in private_ to know your own address on the bot.",
-			"Then you can send funds to that address the same way as you usually transfer funds with your PandaBank.",
-			"Use /balance _in private_ to know how much Pandacoin you have got in your account.",
+			"Then you can send funds to that address the same way as you usually transfer funds with your wallet.",
+			"Use /balance _in private_ to know how much Bitcoin Cash you have got in your account.",
 			"",
-			":person_tipping_hand: Once you have some pandas, share them with your friends.",
+			":person_tipping_hand: Once you have some bits, share them with your friends.",
 			"Use `/tip <user> <amount>`",
 			"Make sure to correctly tag your the person you are tipping.",
 			"",
-			":globe_with_meridians: Need to withdraw to your PandaBank?",
+			":globe_with_meridians: Need to withdraw to your wallet?",
 			"Use `/withdraw <address> <amount>`",
 			"Please double check your address before submitting, as we cannot undo that process.",
+			"",
+			":bulb: This bot uses \"bits\" (shown as B) instead of bitcoins (BCH).",
+			"`1 bit = 0.000001 BCH`",
 			"",
 			"",
 			"Need more advanced help and usage tricks?",
@@ -34,7 +37,7 @@
 	},
 	"button_help_advanced_url": {
 		"en": [
-			"https://github.com/DarthJahus/PandaTip-Telegram/wiki/Usage-and-tricks-%5BEnglish%5D"
+			"https://github.com/DarthJahus/CashTip-Telegram/wiki/Usage-and-tricks-%5BEnglish%5D"
 		]
 	},
 	"help_public": {
@@ -54,8 +57,8 @@
 	},
 	"about": {
 		"en": [
-			"This is a tipbot for Pandacoin.",
-			"Made by [@DarthJahus](https://github.com/DarthJahus) and [@JustTheDoctor](https://github.com/JustTheDoctor)."
+			"This is a tipbot for Bitcoin Cash.",
+			"Made by [@DarthJahus](https://github.com/DarthJahus/CashTip-Telegram)"
 		]
 	},
 	"about_public": {
@@ -92,7 +95,7 @@
 	},
 	"user_no_address_button": {
 		"en": [
-			"My account :panda_face:"
+			"My account :sparkle:"
 		]
 	},
 	"user_balance": {
@@ -153,7 +156,7 @@
 		"en": [
 			"There was an error in your tip.",
 			"- All recipients need to be *unique* and *properly tagged*;",
-			"- Amounts have to be *numbers* (not real pandas);",
+			"- Amounts have to be *numbers*;",
 			"- Number of recipients needs to be the *same* as the number of provided amounts;",
 			" (You can enter one amount that will be applied to all recipients.)"
 		]	

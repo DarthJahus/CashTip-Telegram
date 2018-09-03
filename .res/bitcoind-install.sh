@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # Used on Ubuntu 16
 # assuming that /bitcoin exists and contains:
 # * bitcoin.conf
