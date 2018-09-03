@@ -357,7 +357,7 @@ def tip(bot, update):
 	_amounts_float = []
 	try:
 		for _amount in _amounts:
-			_amounts_float.append(convert_to_int(_amount))
+			_amounts_float.append(convert_to_int(_amount)*__units["multiplier"])
 	except:
 		_amounts_float = []
 	# Make sure number of recipients is the same as number of values
@@ -409,7 +409,10 @@ def tip(bot, update):
 					# Now, finally, check if user has enough funds (includes tx fee)
 					if sum(_amounts_float) > _balance - max(1*__fee_std, int(len(_recipients)/3)*__fee_std):
 						update.message.reply_text(
-							text="%s `%s`" % (strings.get("tip_no_funds", _lang), convert_satoshi(sum(_amounts_float) + max(1*__fee_std, int(len(_recipients)/3)*__fee_std))),
+							text="%s `%s`" % (
+								strings.get("tip_no_funds", _lang),
+								convert_satoshi(sum(_amounts_float) + max(1*__fee_std, int(len(_recipients)/3)*__fee_std))
+							),
 							quote=True,
 							parse_mode=ParseMode.MARKDOWN
 						)
@@ -523,11 +526,11 @@ def withdraw(bot, update, args):
 		_recipient = None
 		if len(args) == 2:
 			try:
-				_amount = int(args[1])
+				_amount = int(args[1]) * __units["multiplier"]
 				_recipient = args[0]
 			except:
 				try:
-					_amount = int(args[0])
+					_amount = int(args[0]) * __units["multiplier"]
 					_recipient = args[1]
 				except:
 					pass
@@ -710,7 +713,7 @@ def convert_to_int(text):
 
 def convert_satoshi(amount):
 	if amount < __units["multiplier_threshold"]:
-		return "%i %s" % (amount, __units["symbol"])
+		return "%i %s" % (amount/__units["multiplier"], __units["symbol"])
 	else:
 		return "%s %s" % (__units["parent_format"] % amount, __units["parent_name"])
 
