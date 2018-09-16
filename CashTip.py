@@ -36,6 +36,7 @@ __units = {
 }
 __rpc_getbalance_account = True  # If True, use getbalance <account>, else use getbalance <address>
 __rpc_sendmany_account = False   # If False, use sendmany <source_account> {"address": amount}, else {"account": amount}
+__blockchain_explorer_tx = "https://blockchair.com/bitcoin-cash/transaction/"
 
 
 # ToDo: Add some admin commands to check the health of the daemon / wallet.
@@ -508,9 +509,9 @@ def tip(bot, update):
 								text = "*%s* %s\n%s\n\n[tx %s](%s)%s" % (
 									update.effective_user.name,
 									strings.get("tip_success", _lang),
-									''.join((("\n- `%4s ` to *%s*" % (convert_satoshi(_tip_dict_accounts[_recipient_id]), _handled[_recipient_id][0])) for _recipient_id in _tip_dict_accounts)),
+									''.join((("\n- `%6s `to *%s*" % (convert_satoshi(_tip_dict_accounts[_recipient_id]), _handled[_recipient_id][0])) for _recipient_id in _tip_dict_accounts)),
 									_tx[:4] + "..." + _tx[-4:],
-									"https://explorer.bitcoin.com/bch/tx/" + _tx,
+									__blockchain_explorer_tx + _tx,
 									_suppl
 								),
 								quote=True,
@@ -608,7 +609,7 @@ def withdraw(bot, update, args):
 									text="%s\n[tx %s](%s)" % (
 										strings.get("withdraw_success", _lang),
 										_tx[:4]+"..."+_tx[-4:],
-										"https://explorer.bitcoin.com/bch/tx/" + _tx
+										__blockchain_explorer_tx + _tx
 									),
 									quote=True,
 									parse_mode=ParseMode.MARKDOWN,
@@ -720,7 +721,7 @@ def scavenge(bot, update):
 												strings.get("scavenge_success_2", _lang),
 												convert_satoshi(_balance-__fee_std*3),
 												_tx[:4]+"..."+_tx[-4:],
-												"https://explorer.bitcoin.com/bch/tx/" + _tx,
+												__blockchain_explorer_tx + _tx,
 											),
 											quote=True,
 											parse_mode=ParseMode.MARKDOWN,
