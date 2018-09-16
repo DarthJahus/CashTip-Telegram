@@ -1,7 +1,7 @@
 # cp ./cashtip.service /lib/systemd/system/cashtip.service
 # chmod 644 /lib/systemd/system/cashtip.service
 # Don't forget #!/usr/bin/python
-# chmod +x ./cashtip.py
+# chmod +x ./CashTip.py
 # systemctl daemon-reload
 # systemctl enable cashtip.service
 # systemctl start cashtip.service
@@ -20,7 +20,7 @@ After=bitcoind.service
 
 [Service]
 Type=simple
-ExecStart=/bitcoin/cashtip-telegram/cashtip.py
+ExecStart=/bitcoin/cashtip-telegram/CashTip.py
 WorkingDirectory=/bitcoin/cashtip-telegram/
 Restart=always
 RestartSec=600
