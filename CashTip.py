@@ -363,7 +363,8 @@ def tip(bot, update):
 	_amounts_float = []
 	try:
 		for _amount in _amounts:
-			_amounts_float.append(convert_to_int(_amount)*__units["multiplier"])
+			_adjusted_amount = round(convert_to_int(_amount) * __units["multiplier"], 8)
+			_amounts_float.append(_adjusted_amount)
 	except:
 		_amounts_float = []
 	# Make sure number of recipients is the same as number of values
