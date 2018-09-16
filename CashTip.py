@@ -37,6 +37,7 @@ __units = {
 __rpc_getbalance_account = True  # If True, use getbalance <account>, else use getbalance <address>
 __rpc_sendmany_account = False   # If False, use sendmany <source_account> {"address": amount}, else {"account": amount}
 __blockchain_explorer_tx = "https://blockchair.com/bitcoin-cash/transaction/"
+__minconf = 0  # See issue #4 (https://github.com/DarthJahus/CashTip-Telegram/issues/4)
 
 
 # ToDo: Add some admin commands to check the health of the daemon / wallet.
@@ -303,9 +304,9 @@ def balance(bot, update):
 				# This way, when asking for address (/deposit), we can return the first one.
 				_address = _addresses[0]
 				if __rpc_getbalance_account:
-					_rpc_call = __wallet_rpc.getbalance(_user_id)
+					_rpc_call = __wallet_rpc.getbalance(_user_id, __minconf)
 				else:
-					_rpc_call = __wallet_rpc.getbalance(_address)
+					_rpc_call = __wallet_rpc.getbalance(_address, __minconf)
 				if not _rpc_call["success"]:
 					print("Error during RPC call.")
 					log("balance", _user_id, "(2) getbalance > Error during RPC call: %s" % _rpc_call["message"])
@@ -405,9 +406,9 @@ def tip(bot, update):
 				_address = _addresses[0]
 				# Get user's balance
 				if __rpc_getbalance_account:
-					_rpc_call = __wallet_rpc.getbalance(_user_id)
+					_rpc_call = __wallet_rpc.getbalance(_user_id, __minconf)
 				else:
-					_rpc_call = __wallet_rpc.getbalance(_address)
+					_rpc_call = __wallet_rpc.getbalance(_address, __minconf)
 				if not _rpc_call["success"]:
 					print("Error during RPC call.")
 					log("tip", _user_id, "(2) getbalance > Error during RPC call: %s" % _rpc_call["message"])
@@ -494,7 +495,7 @@ def tip(bot, update):
 						# sendfrom <from address or account> <receive address or account> <amount> [minconf=1] [comment] [comment-to]
 						# and
 						# sendmany <from address or account> {receive address or account:amount,...} [minconf=1] [comment]
-						_rpc_call = __wallet_rpc.sendmany(_user_id, _tip_dict)
+						_rpc_call = __wallet_rpc.sendmany(_user_id, _tip_dict, __minconf)
 						if not _rpc_call["success"]:
 							print("Error during RPC call.")
 							log("tip", _user_id, "(4) sendmany > Error during RPC call: %s" % _rpc_call["message"])
@@ -578,9 +579,9 @@ def withdraw(bot, update, args):
 				else:
 					_address = _addresses[0]
 					if __rpc_getbalance_account:
-						_rpc_call = __wallet_rpc.getbalance(_user_id)
+						_rpc_call = __wallet_rpc.getbalance(_user_id, __minconf)
 					else:
-						_rpc_call = __wallet_rpc.getbalance(_address)
+						_rpc_call = __wallet_rpc.getbalance(_address, __minconf)
 					if not _rpc_call["success"]:
 						print("Error during RPC call.")
 						log("withdraw", _user_id, "(2) getbalance > Error during RPC call: %s" % _rpc_call["message"])
@@ -597,7 +598,7 @@ def withdraw(bot, update, args):
 							)
 						else:
 							# Withdraw
-							_rpc_call = __wallet_rpc.sendfrom(_user_id, _recipient, _amount)
+							_rpc_call = __wallet_rpc.sendfrom(_user_id, _recipient, _amount, __minconf)
 							if not _rpc_call["success"]:
 								print("Error during RPC call.")
 								log("withdraw", _user_id, "(3) sendfrom > Error during RPC call: %s" % _rpc_call["message"])
@@ -660,9 +661,9 @@ def scavenge(bot, update):
 				else:
 					_address = _addresses[0]
 					if __rpc_getbalance_account:
-						_rpc_call = __wallet_rpc.getbalance(_user_id)
+						_rpc_call = __wallet_rpc.getbalance(_user_id, __minconf)
 					else:
-						_rpc_call = __wallet_rpc.getbalance(_address)
+						_rpc_call = __wallet_rpc.getbalance(_address, __minconf)
 					if not _rpc_call["success"]:
 						print("Error during RPC call.")
 						log("scavenge", _user_id, "(2) getbalance > Error during RPC call: %s" % _rpc_call["message"])
@@ -706,7 +707,7 @@ def scavenge(bot, update):
 								if _address is not None:
 									# Move the funds from UserID to Username
 									# ToDo: Make the fees consistent
-									_rpc_call = __wallet_rpc.sendfrom(_user_id, _address, _balance-__fee_std*3)
+									_rpc_call = __wallet_rpc.sendfrom(_user_id, _address, _balance-3*__fee_std, __minconf)
 									if not _rpc_call["success"]:
 										print("Error during RPC call.")
 										log("scavenge", _user_id, "(5) sendfrom > Error during RPC call: %s" % _rpc_call["message"])
