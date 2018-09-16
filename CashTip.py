@@ -30,14 +30,15 @@ __units = {
 	"parent_name": "BCH",
 	"parent_format": "%.2f",
 	"name": "bits",
-	"symbol": "B",
+	"symbol": u"\u20bf",
 	"multiplier": 0.000001,
 	"multiplier_threshold": 0.01
 }
-__rpc_getbalance_account = True
+__rpc_getbalance_account = True  # If True, use getbalance <account>, else use getbalance <address>
+__rpc_sendmany_account = False   # If False, use sendmany <source_account> {"address": amount}, else {"account": amount}
 
 
-# ToDo: Add service commands like /pause (pauses the bot for everyone), and maybe some commands to check the health of the daemon / wallet.
+# ToDo: Add some admin commands to check the health of the daemon / wallet.
 
 
 # ToDo: Don't forget to write the strings in strings.json (they are actually empty)
@@ -474,7 +475,10 @@ def tip(bot, update):
 									_address = _addresses[0]
 							if _address is not None:
 								# Because recipient has an address, we can add him to the dict
-								_tip_dict[_recipient_id] = _amounts_float[i]
+								if __rpc_sendmany_account:
+									_tip_dict[_recipient_id] = _amounts_float[i]
+								else:
+									_tip_dict[_address] = _amounts_float[i]
 							i += 1
 						#
 						# Check if there are users left to tip

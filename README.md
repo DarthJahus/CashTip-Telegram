@@ -61,6 +61,7 @@ A `bitcoin.conf` file is needed in data directory.
 - [x] Add service commands like `/pause` (pauses the bot for everyone), and maybe some commands to check the health of the daemon / wallet.
 - [x] Populate `strings.json`
 - [x] Add spam protection
+- [ ] Add some admin commands to check the health of the daemon / wallet
 - [ ] Per-user language
 - [ ] Show fiat equivalent for balance
 - [ ] Add `/price` and `/marketcap` commands
