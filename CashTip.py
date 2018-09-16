@@ -427,7 +427,8 @@ def tip(bot, update):
 					else:
 						# Now create the {recipient_id: amount} dictionary
 						i = 0
-						_tip_dict = {}
+						_tip_dict_addresses = {}
+						_tip_dict_accounts = {}
 						for _recipient in _recipients:
 							# add "or _recipient == bot.id" to disallow tipping the tip bot
 							if _recipient == _user_id:
@@ -475,12 +476,15 @@ def tip(bot, update):
 									_address = _addresses[0]
 							if _address is not None:
 								# Because recipient has an address, we can add him to the dict
-								if __rpc_sendmany_account:
-									_tip_dict[_recipient_id] = _amounts_float[i]
-								else:
-									_tip_dict[_address] = _amounts_float[i]
+								_tip_dict_accounts[_recipient_id] = _amounts_float[i]
+								_tip_dict_addresses[_address] = _amounts_float[i]
 							i += 1
 						#
+						_tip_dict = {}
+						if __rpc_sendmany_account:
+							_tip_dict = _tip_dict_accounts
+						else:
+							_tip_dict = _tip_dict_addresses
 						# Check if there are users left to tip
 						if len(_tip_dict) == 0:
 							return
@@ -504,7 +508,7 @@ def tip(bot, update):
 								text = "*%s* %s\n%s\n\n[tx %s](%s)%s" % (
 									update.effective_user.name,
 									strings.get("tip_success", _lang),
-									''.join((("\n- `%3.0f BCH ` to *%s*" % (_tip_dict[_recipient_id], _handled[_recipient_id][0])) for _recipient_id in _tip_dict)),
+									''.join((("\n- `%4s ` to *%s*" % (convert_satoshi(_tip_dict_accounts[_recipient_id]), _handled[_recipient_id][0])) for _recipient_id in _tip_dict_accounts)),
 									_tx[:4] + "..." + _tx[-4:],
 									"https://explorer.bitcoin.com/bch/tx/" + _tx,
 									_suppl
