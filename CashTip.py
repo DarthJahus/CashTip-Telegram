@@ -544,11 +544,11 @@ def withdraw(bot, update, args):
 		_recipient = None
 		if len(args) == 2:
 			try:
-				_amount = int(args[1]) * __units["multiplier"]
+				_amount = round(int(args[1]) * __units["multiplier"], 8)
 				_recipient = args[0]
 			except:
 				try:
-					_amount = int(args[0]) * __units["multiplier"]
+					_amount = round(int(args[0]) * __units["multiplier"], 8)
 					_recipient = args[1]
 				except:
 					pass
@@ -707,7 +707,8 @@ def scavenge(bot, update):
 								if _address is not None:
 									# Move the funds from UserID to Username
 									# ToDo: Make the fees consistent
-									_rpc_call = __wallet_rpc.sendfrom(_user_id, _address, _balance-3*__fee_std, __minconf)
+									_amount = round(_balance - 3 * __fee_std, 8)
+									_rpc_call = __wallet_rpc.sendfrom(_user_id, _address, _amount, __minconf)
 									if not _rpc_call["success"]:
 										print("Error during RPC call.")
 										log("scavenge", _user_id, "(5) sendfrom > Error during RPC call: %s" % _rpc_call["message"])
