@@ -1,0 +1,26 @@
+/setdescription
+This bot allows you to receive, store and send Bitcoin Cash on Telegram.
+
+💰 To get started, create a deposit address or ask a friend to send you some pandas.
+
+💁 Once you have some bits, share them with your friends.
+
+🌐  You can withdraw your bits at any time.
+
+ℹ️  Need help and usage tricks?
+Use the command /help!
+
+/setabouttext
+Tipping bot for Bitcoin Cash.
+Deposit, store and share bits with your friends.
+
+/setcommands
+deposit -Get your deposit address
+balance -Show your balance
+tip - <user> <amount> - Send amount to another user
+withdraw - <address> <amount> - Withdraw your funds to an address
+address -Get your deposit address
+scavenge -Migrate your account (ask admin)
+about -Information about this bot
+help -Get help about this bot
+
