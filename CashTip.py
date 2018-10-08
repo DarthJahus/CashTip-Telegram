@@ -324,12 +324,14 @@ def balance(bot, update):
 
 # Done: Rewrite the whole logic; use tags instead of parsing usernames (2018-07-15)
 # Done: Allow private tipping if the user can be tagged (@username available) (Nothing to add for it to work.)
-def tip(bot, update):
+def tip(bot, update, args):
 	"""
 	/tip <user> <amount>
 	/tip u1 u2 u3 ... v1 v2 v3 ...
 	/tip u1 v1 u2 v2 u3 v3 ...
 	"""
+	if len(args) == 0:
+		return
 	if not _spam_filter.verify(str(update.effective_user.id)):
 		return  # ToDo: Return a message?
 	if _paused:
@@ -820,7 +822,7 @@ if __name__ == "__main__":
 	dispatcher.add_handler(CommandHandler('moon', moon))
 	dispatcher.add_handler(CommandHandler('hi', hi))
 	# Tipbot commands
-	dispatcher.add_handler(CommandHandler('tip', tip))
+	dispatcher.add_handler(CommandHandler('tip', tip, pass_args=True))
 	dispatcher.add_handler(CommandHandler('withdraw', withdraw, pass_args=True))
 	dispatcher.add_handler(CommandHandler('deposit', deposit))
 	dispatcher.add_handler(CommandHandler('address', deposit)) # alias for /deposit
