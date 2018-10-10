@@ -28,7 +28,7 @@ __wallet_rpc = RPCWrapper(BitcoinRPC(config["rpc-uri"], (config["rpc-user"], con
 __fee_std = 0.000010
 __units = {
 	"parent_name": "BCH",
-	"parent_format": "%.2f",
+	"parent_format": "%.4f",
 	"name": "bits",
 	"symbol": u"\u20bf",
 	"multiplier": 0.000001,
